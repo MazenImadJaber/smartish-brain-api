@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt-nodejs');
 
 
 
@@ -9,7 +10,6 @@ const database = {
             id: '123',
             name: 'john',
             email: 'john@gmail.com',
-            password: 'cookies',
             entries: 0,
             joined: new Date()
         },
@@ -17,9 +17,15 @@ const database = {
             id: '124',
             name: 'Sally',
             email: 'sally@gmail.com',
-            password: 'bananas',
             entries: 0,
             joined: new Date()
+        }
+    ],
+    login: [
+        {
+            id: '789',
+            hash: '',
+            email: 'john@gmail.com'
         }
     ]
 }
@@ -39,6 +45,10 @@ app.post('/signin', (req, res) => {
 })
 app.post('/register', (req, res) => {
     const { email, name, password } = req.body;
+    bcrypt.hash(password,null , null, function(err,hash){
+        // STORE HASH IN DB
+        console.log(hash)
+    });
     database.users.push({
         id: '125',
         name: name,
